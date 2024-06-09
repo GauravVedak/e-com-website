@@ -1,20 +1,23 @@
 const { json } = require('express');
 const fs = require('fs');
 const { resolve } = require('node:path');
+const path = require('path');
 
 var items = [];
 var categories = [];
 
 function initialize(){
     return new Promise((resolve, reject) => {
-        fs.readFile('./data/items.json', 'utf8', (err, data) => {
+        const pathOfItems = path.join(__dirname, 'data', 'items.json');
+        const pathOfCategories = path.join(__dirname, 'data', 'categories.json');
+        fs.readFile(pathOfItems, 'utf8', (err, data) => {
             if(err) {
                 reject("unable to read file: 'items.json'")
             }
             else {
                 try{
                     items = JSON.parse(data);
-                    fs.readFile('./data/categories.json', 'utf8', (err, data) => {
+                    fs.readFile(pathOfCategories, 'utf8', (err, data) => {
                         if (err) {
                             reject("unable to read file: 'categories.json'");
                         }
