@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,7 +12,7 @@
     />
     <link rel="stylesheet" href="/css/main.css" />
 
-    <title>About</title>
+    <title>Gaurav Vedak's Store</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -30,30 +29,17 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#"
-          >Web322 – Assignment 2 - Gaurav Amol Vedak</a
-        >
+        <a class="navbar-brand" href="#">Web322 – Assignment 4 - Gaurav Amol
+          Vedak</a>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/shop">Shop</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/items/add">Add Item</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/items">Items</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/categories">Categories</a>
-            </li>
+            {{#navLink "/Shop"}}Shop{{/navLink}}
+            {{#navLink "/About"}}About{{/navLink}}
+            {{#navLink "/Items"}}Items{{/navLink}}
+            {{#navLink "/Categories"}}Categories{{/navLink}}
+            {{#navLink "/items/add"}}Add Items{{/navLink}}
           </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -61,24 +47,7 @@
       <!-- /.container-fluid -->
     </nav>
     <div class="container" style="padding-top: 90px">
-      <div class="row">
-        <aside class="col-md-3">
-          <h2>Coming Soon</h2>
-          <p>Stay tuned for future updates</p>
-        </aside>
-        <section class="main col-md-9">
-          <article>
-            <h2>About</h2>
-            <p>
-              Currently, I'm studying in the CPA(Computer Programming and
-              Analysis) course at Seneca College in Toronto, Canada. My
-              favourite subject for this course so far is WEB322.
-            </p>
-            <p>My interests lie in the fields of automobiles and gaming.</p>
-            <p>My goal is to pursue freelancing as a Full-stack developer.</p>
-          </article>
-        </section>
-      </div>
+      {{{body}}}
     </div>
 
     <!-- Latest compiled and minified Bootstrap 5 JavaScript -->
