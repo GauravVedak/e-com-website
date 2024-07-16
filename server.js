@@ -22,6 +22,8 @@ const streamifier = require("streamifier");
 const exphbs = require("express-handlebars");
 const handlebars = require("handlebars");
 
+app.set("views", path.join(__dirname, "views"));
+
 app.engine(
   ".hbs",
   exphbs.engine({
