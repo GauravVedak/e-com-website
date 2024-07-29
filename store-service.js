@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
-DATABASE_URL =
+var DATABASE_URL =
+  process.env.DATABASE_URL ||
   "postgresql://SenecaDB_owner:zoICrkvnS1x6@ep-crimson-bird-a55ryn7u-pooler.us-east-2.aws.neon.tech/SenecaDB?sslmode=require";
 var sequelize = new Sequelize(process.env.DATABASE_URL, {
   host: "ep-crimson-bird-a55ryn7u-pooler.us-east-2.aws.neon.tech",
