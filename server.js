@@ -1,19 +1,3 @@
-/*********************************************************************************
- *  WEB322 – Assignment 04
- *  I declare that this assignment is my own work in accordance with Seneca
- *  Academic Policy.  No part of this assignment has been copied manually or
- *  electronically from any other source (including 3rd party web sites) or
- *  distributed to other students. I acknowledge that violation of this policy
- * to any degree results in a ZERO for this assignment and possible failure of
- * the course.
- *
- * Name: Gaurav Amol Vedak
- * Student ID: 140524232
- * Date: 16th July, 2024
- * Vercel Web App URL: https://web322-app-ten.vercel.app
- * GitHub Repository URL: https://github.com/GauravVedak/web322-app
- *
- ********************************************************************************/
 const express = require("express");
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
@@ -54,6 +38,12 @@ app.engine(
           return options.fn(this);
         }
       },
+      formatDate: function (dateObj) {
+        let year = dateObj.getFullYear();
+        let month = (dateObj.getMonth() + 1).toString();
+        let day = dateObj.getDate().toString();
+        return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+      },
     },
   })
 );
@@ -72,6 +62,8 @@ const upload = multer();
 const itemData = require("./store-service");
 
 app.use(express.static(__dirname + "public"));
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
   let route = req.path.substring(1);
@@ -140,31 +132,33 @@ app.get("/items", (req, res) => {
   let category = req.query.category;
   let minDate = req.query.minDate;
 
+  const spawnItems = (data) => {
+    if (data.length > 0) {
+      res.render("items", { items: data });
+    } else {
+      res.render("items", { message: "no results" });
+    }
+  };
+
   if (category != undefined) {
     itemData
       .getItemsByCategory(category)
-      .then((matchingItems) => {
-        res.render("items", { items: matchingItems });
-      })
-      .catch((err) => {
+      .then(spawnItems)
+      .catch(() => {
         res.render("items", { message: "no results" });
       });
   } else if (minDate != undefined) {
     itemData
       .getItemsByMinDate(minDate)
-      .then((matchItems) => {
-        res.render("items", { items: matchItems });
-      })
-      .catch((err) => {
+      .then(spawnItems)
+      .catch(() => {
         res.render("items", { message: "no results" });
       });
   } else {
     itemData
       .getAllItems()
-      .then((items) => {
-        res.render("items", { items: items });
-      })
-      .catch((err) => {
+      .then(spawnItems)
+      .catch(() => {
         res.render("items", { message: "no results" });
       });
   }
@@ -187,12 +181,17 @@ app.get("/categories", (req, res) => {
   itemData
     .getCategories()
     .then((categories) => {
-      res.render("categories", { categories: categories });
+      if (categories.length > 0) {
+        res.render("categories", { categories });
+      } else {
+        res.render("categories", { message: "no results" });
+      }
     })
     .catch((err) => {
       res.render("categories", { message: "no results" });
     });
 });
+
 app.get("/items/add", (req, res) => {
   res.render("addItem");
 });
@@ -280,6 +279,54 @@ app.post("/items/add", upload.single("featureImage"), (req, res) => {
       res.redirect("/items");
     });
   }
+});
+
+app.get("/items/add", (req, res) => {
+  itemData
+    .getCategories()
+    .then((data) => {
+      res.render("addItem", { categories: data });
+    })
+    .catch((err) => {
+      res.render("addItem", { categories: [] });
+    });
+});
+
+app.get("/categories/add", (req, res) => {
+  res.render("addCategory");
+});
+
+app.post("/categories/add", (req, res) => {
+  itemData
+    .addCategory(req.body)
+    .then(() => {
+      res.redirect("/categories");
+    })
+    .catch((err) => {
+      res.send("An error occured while trying to add the category");
+    });
+});
+
+app.get("/categories/delete/:id", (req, res) => {
+  itemData
+    .deleteCategoryById(req.params.id)
+    .then(() => {
+      res.redirect("/categories");
+    })
+    .catch((err) => {
+      res.status(500).send("Unable to Remove Category / Category not found");
+    });
+});
+
+app.get("/items/delete/:id", (req, res) => {
+  itemData
+    .deleteItemById(req.params.id)
+    .then(() => {
+      res.redirect("/items");
+    })
+    .catch((err) => {
+      res.status(500).send("Unable to Remove Item / Item not found");
+    });
 });
 
 app.use((req, res, next) => {
