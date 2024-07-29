@@ -1,13 +1,16 @@
 const Sequelize = require("sequelize");
-var sequelize = new Sequelize("SenecaDB", "SenecaDB_owner", "zoICrkvnS1x6", {
-  host: "ep-crimson-bird-a55ryn7u-pooler.us-east-2.aws.neon.tech",
-  dialect: "postgres",
-  port: 5432,
-  dialectOptions: {
-    ssl: { rejectUnauthorized: false },
-  },
-  query: { raw: true },
-});
+var sequelize = new Sequelize(
+  "postgresql://SenecaDB_owner:zoICrkvnS1x6@ep-crimson-bird-a55ryn7u-pooler.us-east-2.aws.neon.tech/SenecaDB?sslmode=require",
+  {
+    host: "ep-crimson-bird-a55ryn7u-pooler.us-east-2.aws.neon.tech",
+    dialect: "postgres",
+    port: 5432,
+    dialectOptions: {
+      ssl: { rejectUnauthorized: false },
+    },
+    query: { raw: true },
+  }
+);
 
 var Item = sequelize.define("Item", {
   body: Sequelize.TEXT,
