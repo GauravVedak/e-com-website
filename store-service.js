@@ -1,13 +1,10 @@
-const { Sequelize, DataTypes } = require("sequelize");
-var DATABASE_URL =
-  process.env.DATABASE_URL ||
-  "postgresql://SenecaDB_owner:zoICrkvnS1x6@ep-crimson-bird-a55ryn7u-pooler.us-east-2.aws.neon.tech/SenecaDB?sslmode=require";
-var sequelize = new Sequelize(DATABASE_URL, {
+const Sequelize = require("sequelize");
+var sequelize = new Sequelize("SenecaDB", "SenecaDB_owner", "zoICrkvnS1x6", {
   host: "ep-crimson-bird-a55ryn7u-pooler.us-east-2.aws.neon.tech",
   dialect: "postgres",
   port: 5432,
   dialectOptions: {
-    ssl: { require: true, rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false },
   },
   query: { raw: true },
 });
