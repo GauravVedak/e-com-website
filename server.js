@@ -1,3 +1,17 @@
+/*********************************************************************************
+ *  WEB322 – Assignment 06
+ *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part of this
+ *  assignment has been copied manually or electronically from any other source (including web sites) or
+ *  distributed to other students.
+ *
+ *  Name:  Gaurav Amol Vedak
+ *  Date:  8th August, 2024
+ *  Student ID:  140524232
+ *  Vercel Web App URL: https://web322-app-ten.vercel.app
+ *
+ *  GitHub Repository URL: https://github.com/GauravVedak/web322-app
+ *
+ ********************************************************************************/
 const express = require("express");
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
